@@ -23,16 +23,23 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Container(
-                  alignment: Alignment.center,
-                  child: Image.asset('images/logo.png'),
-                  height: 60.0,
+                Hero(
+                  tag: 'Logo',
+                  child: SizedBox(
+                    child: Image.asset(
+                      'images/logo1.png',
+                    ),
+                    height: 80.0,
+                  ),
                 ),
                 const Text(
-                  'Flash Chat',
+                  "ChitChatter",
                   style: TextStyle(
-                    fontSize: 45.0,
+                    color: Colors.black,
+                    fontSize: 55.0,
                     fontWeight: FontWeight.w900,
                   ),
                 ),
@@ -51,7 +58,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   onPressed: () async {
                     //Go to login screen.
                     Navigator.pushNamed(context, LoginScreen.id);
-                    print('Login button clicked');
+                    // print('Login button clicked');
                   },
                   minWidth: 200.0,
                   height: 50.0,
@@ -71,7 +78,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   onPressed: () {
                     //Go to registration screen.
                     Navigator.pushNamed(context, RegistrationScreen.id);
-                    print('Register button clicked');
+                    // print('Register button clicked');
                   },
                   minWidth: 200.0,
                   height: 50.0,
