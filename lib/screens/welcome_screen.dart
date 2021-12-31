@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
@@ -11,11 +13,52 @@ class WelcomeScreen extends StatefulWidget {
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
+class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProviderStateMixin {
+  AnimationController? controller;
+
+  Animation? animation;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+      //upperBound: 100.0, //upperlimit of loading/animation.
+    );
+
+    // animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
+    animation = ColorTween(
+      begin: Colors.blue,
+      end: Colors.white,
+    ).animate(controller!);
+
+    controller!.forward();
+
+    controller!.addListener(() {
+      setState(() {});
+      //print(animation!.value);
+    });
+
+    // animation.addStatusListener((status) {
+    //   if (status == AnimationStatus.completed) {
+    //     controller.reverse(from: 1.0);
+    //   } else if (status == AnimationStatus.dismissed) {
+    //     controller.forward();
+    //   }
+    // });
+  }
+
+  @override
+  void dispose() {
+    controller!.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: animation!.value, //Colors.red.withOpacity(controller.value)      will fade in color from default to red .,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
@@ -32,14 +75,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     child: Image.asset(
                       'images/logo1.png',
                     ),
-                    height: 80.0,
+                    height: 100.0, //  controller.value  increases size from 0 to 100.0 of the image.
+                    // animation.value  decelerates curve from 0 to 1.
                   ),
                 ),
                 const Text(
                   "ChitChatter",
+                  //'${controller.value.toInt()}',          // will show loading animation from 0 to 100.
                   style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 55.0,
+                    color: Colors.blue,
+                    fontSize: 45.0,
                     fontWeight: FontWeight.w900,
                   ),
                 ),
@@ -61,7 +106,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     // print('Login button clicked');
                   },
                   minWidth: 200.0,
-                  height: 50.0,
+                  height: 55.0,
                   child: const Text(
                     'Log In',
                   ),
@@ -81,7 +126,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     // print('Register button clicked');
                   },
                   minWidth: 200.0,
-                  height: 50.0,
+                  height: 55.0,
                   child: const Text(
                     'Register',
                   ),
