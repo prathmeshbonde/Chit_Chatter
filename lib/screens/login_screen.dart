@@ -1,6 +1,10 @@
+// ignore_for_file: unnecessary_null_comparison, avoid_print
+
 import 'package:Chit_chatter/components/constants.dart';
 import 'package:Chit_chatter/components/rounded_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:Chit_chatter/screens/chat_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -12,6 +16,22 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _auth = FirebaseAuth.instance;
+
+  String email = "";
+  String password = "";
+  String errorMessage = "";
+
+  void loginErrors(FirebaseAuthException e) {
+    if (e.code == 'user-not-found') {
+      errorMessage = 'Invalid user or email!';
+    } else if (e.code == 'wrong-password') {
+      errorMessage = 'Incorrect password!';
+    } else {
+      errorMessage = 'Something went wrong, try again.';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,8 +53,10 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 48.0,
             ),
             TextField(
+              textAlign: TextAlign.center,
+              keyboardType: TextInputType.emailAddress,
               onChanged: (value) {
-                //Do something with the user input.
+                email = value;
               },
               decoration: kTextFieldDecoration.copyWith(
                 labelText: 'E-Mail',
@@ -46,8 +68,10 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 16.0,
             ),
             TextField(
+              textAlign: TextAlign.center,
+              obscureText: true,
               onChanged: (value) {
-                //Do something with the user input.
+                password = value;
               },
               decoration: kTextFieldDecoration.copyWith(
                 labelText: 'Password',
@@ -61,7 +85,28 @@ class _LoginScreenState extends State<LoginScreen> {
             RoundedButton(
               colour: Colors.lightBlueAccent,
               buttonText: 'Log In',
-              onPressed: () {},
+              onPressed: () async {
+                try {
+                  final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
+                  if (user != null) {
+                    Navigator.pushNamed(context, ChatScreen.id);
+                  }
+                } on FirebaseAuthException catch (e) {
+                  loginErrors(e);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        errorMessage,
+                        style: const TextStyle(fontSize: 18.0),
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      backgroundColor: Colors.red.shade400,
+                    ),
+                  );
+                }
+              },
             ),
           ],
         ),
@@ -69,3 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
+/*
+
+*/
