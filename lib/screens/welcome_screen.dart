@@ -3,6 +3,8 @@
 import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flash_chat/components/rounded_button.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -22,14 +24,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
   void initState() {
     super.initState();
     controller = AnimationController(
-      duration: const Duration(seconds: 1),
+      duration: const Duration(milliseconds: 1200),
       vsync: this,
-      //upperBound: 100.0, //upperlimit of loading/animation.
     );
 
     // animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
     animation = ColorTween(
-      begin: Colors.blue,
+      begin: Colors.blue.shade300,
       end: Colors.white,
     ).animate(controller!);
 
@@ -37,16 +38,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
 
     controller!.addListener(() {
       setState(() {});
-      //print(animation!.value);
     });
 
-    // animation.addStatusListener((status) {
-    //   if (status == AnimationStatus.completed) {
-    //     controller.reverse(from: 1.0);
-    //   } else if (status == AnimationStatus.dismissed) {
-    //     controller.forward();
-    //   }
-    // });
+    /* animation!.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        controller!.reverse(from: 1.0);
+      } else if (status == AnimationStatus.dismissed) {
+        controller!.forward();
+      }
+    }); */
   }
 
   @override
@@ -79,59 +79,51 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
                     // animation.value  decelerates curve from 0 to 1.
                   ),
                 ),
-                const Text(
+                AnimatedTextKit(
+                  animatedTexts: [
+                    TypewriterAnimatedText(
+                      'ChitChatter', //'${controller.value.toInt()}',          // will show loading animation from 0 to 100.
+                      textStyle: const TextStyle(
+                        color: Colors.blue,
+                        fontSize: 45.0,
+                        fontWeight: FontWeight.w900,
+                      ),
+                      speed: const Duration(milliseconds: 200),
+                    ),
+                  ],
+                  totalRepeatCount: 2,
+                  stopPauseOnTap: true,
+                  displayFullTextOnTap: true,
+                ),
+                /* const Text(
                   "ChitChatter",
-                  //'${controller.value.toInt()}',          // will show loading animation from 0 to 100.
+                  
                   style: TextStyle(
                     color: Colors.blue,
                     fontSize: 45.0,
                     fontWeight: FontWeight.w900,
                   ),
-                ),
+                ), */
               ],
             ),
             const SizedBox(
               height: 48.0,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Material(
-                elevation: 10.0,
-                color: Colors.lightBlueAccent,
-                borderRadius: BorderRadius.circular(30.0),
-                child: MaterialButton(
-                  onPressed: () async {
-                    //Go to login screen.
-                    Navigator.pushNamed(context, LoginScreen.id);
-                    // print('Login button clicked');
-                  },
-                  minWidth: 200.0,
-                  height: 55.0,
-                  child: const Text(
-                    'Log In',
-                  ),
-                ),
-              ),
+            RoundedButton(
+              colour: Colors.lightBlueAccent,
+              buttonText: 'Log In',
+              onPressed: () async {
+                //Go to login screen.
+                Navigator.pushNamed(context, LoginScreen.id);
+                // print('Login button clicked');
+              },
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Material(
-                color: Colors.blueAccent,
-                borderRadius: BorderRadius.circular(30.0),
-                elevation: 10.0,
-                child: MaterialButton(
-                  onPressed: () {
-                    //Go to registration screen.
-                    Navigator.pushNamed(context, RegistrationScreen.id);
-                    // print('Register button clicked');
-                  },
-                  minWidth: 200.0,
-                  height: 55.0,
-                  child: const Text(
-                    'Register',
-                  ),
-                ),
-              ),
+            RoundedButton(
+              colour: Colors.blueAccent,
+              buttonText: 'Register',
+              onPressed: () async {
+                Navigator.pushNamed(context, RegistrationScreen.id);
+              },
             ),
           ],
         ),
