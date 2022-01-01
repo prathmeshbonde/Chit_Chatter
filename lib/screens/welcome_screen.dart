@@ -1,10 +1,10 @@
 // ignore_for_file: avoid_print
 
-import 'package:flash_chat/screens/login_screen.dart';
-import 'package:flash_chat/screens/registration_screen.dart';
+import 'package:Chit_chatter/screens/login_screen.dart';
+import 'package:Chit_chatter/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:flash_chat/components/rounded_button.dart';
+import 'package:Chit_chatter/components/rounded_button.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);

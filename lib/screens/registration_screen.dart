@@ -1,5 +1,5 @@
-import 'package:flash_chat/components/constants.dart';
-import 'package:flash_chat/components/rounded_button.dart';
+import 'package:Chit_chatter/components/constants.dart';
+import 'package:Chit_chatter/components/rounded_button.dart';
 import 'package:flutter/material.dart';
 
 class RegistrationScreen extends StatefulWidget {
