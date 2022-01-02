@@ -15,11 +15,11 @@ class ChitChatter extends StatelessWidget {
     Firebase.initializeApp();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(
+      /* theme: ThemeData.dark().copyWith(
         textTheme: const TextTheme(
           bodyText1: TextStyle(color: Colors.black54),
         ),
-      ),
+      ), */
       initialRoute: WelcomeScreen.id,
       routes: {
         WelcomeScreen.id: (context) => const WelcomeScreen(),
