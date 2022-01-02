@@ -72,7 +72,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.emailAddress,
                 onChanged: (value) {
-                  //Do something with the user input.
                   email = value;
                 },
                 decoration: kTextFieldDecoration.copyWith(
@@ -111,7 +110,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 textAlign: TextAlign.center,
                 obscureText: _isObscure,
                 onChanged: (value) {
-                  //Do something with the user input.
                   cpassword = value;
                 },
                 decoration: kTextFieldDecoration.copyWith(

@@ -35,13 +35,6 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  /* void getMessages() async {
-    final messages = await _firestore.collection('messages').get();
-    for (var msg in messages.docs) {
-      print(msg.data());
-    }
-  } */
-
   void messageStream() async {
     await for (var snapshot in _firestore.collection('messages').snapshots()) {
       for (var msg in snapshot.docs) {
@@ -59,7 +52,6 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: null,
         actions: <Widget>[
@@ -89,12 +81,16 @@ class _ChatScreenState extends State<ChatScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Expanded(
-                    child: TextField(
-                      controller: msgTextController,
-                      onChanged: (value) {
-                        messageText = value;
-                      },
-                      decoration: kMessageTextFieldDecoration,
+                    flex: 3,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        controller: msgTextController,
+                        onChanged: (value) {
+                          messageText = value;
+                        },
+                        decoration: kMessageTextFieldDecoration,
+                      ),
                     ),
                   ),
                   TextButton(
@@ -105,9 +101,10 @@ class _ChatScreenState extends State<ChatScreen> {
                         'sender': loggedInUser!.email,
                       });
                     },
-                    child: const Text(
-                      'Send',
-                      style: kSendButtonTextStyle,
+                    child: const Icon(
+                      Icons.send_rounded,
+                      color: Colors.lightBlueAccent,
+                      size: 35.0,
                     ),
                   ),
                 ],

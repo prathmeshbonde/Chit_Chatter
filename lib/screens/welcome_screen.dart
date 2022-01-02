@@ -28,7 +28,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
       vsync: this,
     );
 
-    // animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
     animation = ColorTween(
       begin: Colors.blue.shade300,
       end: Colors.white,
@@ -39,14 +38,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
     controller!.addListener(() {
       setState(() {});
     });
-
-    /* animation!.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        controller!.reverse(from: 1.0);
-      } else if (status == AnimationStatus.dismissed) {
-        controller!.forward();
-      }
-    }); */
   }
 
   @override
@@ -58,7 +49,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: animation!.value, //Colors.red.withOpacity(controller.value)      will fade in color from default to red .,
+      backgroundColor: animation!.value,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
@@ -75,14 +66,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
                     child: Image.asset(
                       'images/logo1.png',
                     ),
-                    height: 100.0, //  controller.value  increases size from 0 to 100.0 of the image.
-                    // animation.value  decelerates curve from 0 to 1.
+                    height: 100.0, //
                   ),
                 ),
                 AnimatedTextKit(
                   animatedTexts: [
                     TypewriterAnimatedText(
-                      'ChitChatter', //'${controller.value.toInt()}',          // will show loading animation from 0 to 100.
+                      'ChitChatter',
                       textStyle: const TextStyle(
                         color: Colors.blue,
                         fontSize: 45.0,
@@ -95,15 +85,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
                   stopPauseOnTap: true,
                   displayFullTextOnTap: true,
                 ),
-                /* const Text(
-                  "ChitChatter",
-                  
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 45.0,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ), */
               ],
             ),
             const SizedBox(
@@ -113,9 +94,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
               colour: Colors.lightBlueAccent,
               buttonText: 'Log In',
               onPressed: () async {
-                //Go to login screen.
                 Navigator.pushNamed(context, LoginScreen.id);
-                // print('Login button clicked');
               },
             ),
             RoundedButton(
